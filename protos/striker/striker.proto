@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package mavsdk.rpc.striker;
+
+import "mavsdk_options.proto";
+
+option java_package = "io.mavsdk.striker";
+option java_outer_classname = "StrikerProto";
+
+/*
+ * Allow users to get vehicle telemetry and state information
+ */
+service StrikerService {
+    // Subscribe to 'Heartbeat' updates.
+    rpc SubscribeHeartbeat(SubscribeHeartbeatRequest) returns (stream HeartbeatResponse) {}
+
+    // Subscribe to 'Sys Status' updates.
+    rpc SubscribeSysStatus(SubscribeSysStatusRequest) returns (stream SysStatusResponse) {}
+}
+
+message SubscribeHeartbeatRequest {}
+
+message HeartbeatResponse {
+    Heartbeat heartbeat = 1; // Heartbeat data
+}
+
+message SubscribeSysStatusRequest {}
+
+message SysStatusResponse {
+    SysStatus sys_status = 1; // System status data
+}
+
+// Heartbeat type.
+message Heartbeat {
+    uint32 custom_mode = 1; // A bitfield for use for autopilot-specific flags
+    uint32 type = 2; // Vehicle or component type. Use MAV_TYPE_* constants
+    uint32 autopilot = 3; // Autopilot type/class. Use MAV_AUTOPILOT_* constants
+    uint32 base_mode = 4; // System mode bitmap. Use MAV_MODE_FLAG_* constants
+    uint32 system_status = 5; // System status flag. Use MAV_STATE_* constants
+    uint32 mavlink_version = 6; // MAVLink version, set by protocol
+}
+
+// System status type.
+message SysStatus {
+    uint32 onboard_control_sensors_present = 1; // Bitmask of onboard controllers and sensors present
+    uint32 onboard_control_sensors_enabled = 2; // Bitmask of enabled controllers/sensors
+    uint32 onboard_control_sensors_health = 3; // Bitmask of sensors with errors (0 = error, 1 = healthy)
+    uint32 load = 4; // [0-1000] Maximum loop load percentage (1000 = 100%)
+    uint32 voltage_battery = 5; // [mV] Battery voltage, UINT16_MAX if not sent
+    int32 current_battery = 6; // [cA] Battery current, -1 if not sent
+    uint32 drop_rate_comm = 7; // [%] Communication drop rate
+    uint32 errors_comm = 8; // Communication errors count
+    uint32 errors_count1 = 9; // Autopilot-specific errors
+    uint32 errors_count2 = 10; // Autopilot-specific errors
+    uint32 errors_count3 = 11; // Autopilot-specific errors
+    uint32 errors_count4 = 12; // Autopilot-specific errors
+    int32 battery_remaining = 13; // [%] Battery energy remaining, -1 if not sent
+    uint32 onboard_control_sensors_present_extended = 14; // Extended bitmask for present sensors
+    uint32 onboard_control_sensors_enabled_extended = 15; // Extended bitmask for enabled sensors
+    uint32 onboard_control_sensors_health_extended = 16; // Extended bitmask for sensor health
+}
