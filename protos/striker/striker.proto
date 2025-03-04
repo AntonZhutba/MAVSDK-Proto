@@ -16,6 +16,15 @@ service StrikerService {
 
     // Subscribe to 'Sys Status' updates.
     rpc SubscribeSysStatus(SubscribeSysStatusRequest) returns (stream SysStatusResponse) {}
+
+    // Subscribe to 'RC channel' updates.
+    rpc SubscribeRcChannel(SubscribeRcChannelRequest) returns(stream RcChannelResponse) {}
+    
+    // Subscribe to 'Magnitometer' updates.
+    rpc SubscribeMagnitometer(SubscribeMagnitometerRequest) returns(stream MagnitometerResponse) {}
+    
+    // Subscribe to 'Battery voltage' updates.
+    rpc SubscribeBatteryVoltages(SubscribeBatteryVoltagesRequest) returns(stream BatteryVoltagesResponse) {}
 }
 
 message SubscribeHeartbeatRequest {}
@@ -28,6 +37,24 @@ message SubscribeSysStatusRequest {}
 
 message SysStatusResponse {
     SysStatus sys_status = 1; // System status data
+}
+
+message SubscribeRcChannelRequest {}
+
+message RcChannelResponse {
+    RcChannel rc_channel = 1; // RC_Channel data
+}
+
+message SubscribeMagnitometerRequest {}
+
+message MagnitometerResponse {
+    Magnitometer magnitometer = 1; // Magnitometer data
+}
+
+message SubscribeBatteryVoltagesRequest {}
+
+message BatteryVoltagesResponse {
+    BatteryVoltages battery_voltages = 1; // BatteryVoltages data
 }
 
 // Heartbeat type.
@@ -58,4 +85,41 @@ message SysStatus {
     uint32 onboard_control_sensors_present_extended = 14; // Extended bitmask for present sensors
     uint32 onboard_control_sensors_enabled_extended = 15; // Extended bitmask for enabled sensors
     uint32 onboard_control_sensors_health_extended = 16; // Extended bitmask for sensor health
+}
+
+// RC_Channel type.
+message RcChannel {
+    uint32 time_boot_ms = 1 [(mavsdk.options.default_value)="0"];
+    uint32 chan1_raw = 2 [(mavsdk.options.default_value)="0"];
+    uint32 chan2_raw = 3 [(mavsdk.options.default_value)="0"];
+    uint32 chan3_raw = 4 [(mavsdk.options.default_value)="0"];
+    uint32 chan4_raw = 5 [(mavsdk.options.default_value)="0"];
+    uint32 chan5_raw = 6 [(mavsdk.options.default_value)="0"];
+    uint32 chan6_raw = 7 [(mavsdk.options.default_value)="0"];
+    uint32 chan7_raw = 8 [(mavsdk.options.default_value)="0"];
+    uint32 chan8_raw = 9 [(mavsdk.options.default_value)="0"];
+    uint32 chan9_raw = 10 [(mavsdk.options.default_value)="0"];
+    uint32 chan10_raw = 11 [(mavsdk.options.default_value)="0"];
+    uint32 chan11_raw = 12 [(mavsdk.options.default_value)="0"];
+    uint32 chan12_raw = 13 [(mavsdk.options.default_value)="0"];
+    uint32 chan13_raw = 14 [(mavsdk.options.default_value)="0"];
+    uint32 chan14_raw = 15 [(mavsdk.options.default_value)="0"];
+    uint32 chan15_raw = 16 [(mavsdk.options.default_value)="0"];
+    uint32 chan16_raw = 17 [(mavsdk.options.default_value)="0"];
+    uint32 chan17_raw = 18 [(mavsdk.options.default_value)="0"];
+    uint32 chan18_raw = 19 [(mavsdk.options.default_value)="0"];
+    uint32 chancount = 20 [(mavsdk.options.default_value)="0"];
+    uint32 rssi = 21 [(mavsdk.options.default_value)="0"];
+}
+
+message Magnitometer {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+    double magnetic_heading = 4;
+}
+
+message BatteryVoltages {
+    repeated uint32 voltages = 1; /*< [mV] Battery voltage of cells 1 to 10 (see voltages_ext for cells 11-14). Cells in this field above the valid cell count for this battery should have the UINT16_MAX value. If individual cell voltages are unknown or not measured for this battery, then the overall battery voltage should be filled in cell 0, with all others set to UINT16_MAX. If the voltage of the battery is greater than (UINT16_MAX - 1), then cell 0 should be set to (UINT16_MAX - 1), and cell 1 to the remaining voltage. This can be extended to multiple cells if the total voltage is greater than 2 * (UINT16_MAX - 1).*/
+    repeated uint32 ext_voltages = 2; /*< [mV] Battery voltages for cells 11 to 14. Cells above the valid cell count for this battery should have a value of 0, where zero indicates not supported (note, this is different than for the voltages field and allows empty byte truncation). If the measured value is 0 then 1 should be sent instead.*/
 }
