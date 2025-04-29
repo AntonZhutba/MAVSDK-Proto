@@ -29,11 +29,9 @@ service StrikerService {
     rpc SubscribeBatteryVoltages(SubscribeBatteryVoltagesRequest) returns(stream BatteryVoltagesResponse) {}
 
     // Subscribe to 'Available Modes Monitor' updates.
-    rpc SubscribeAvailableModesMonitor(SubscribeAvailableModesMonitorRequest) returns (stream AvailableModesMonitorResponse) {}
+    rpc SubscribeAvailableModes(SubscribeAvailableModesRequest) returns (stream AvailableModesResponse) {}
 
-    // Request available flight modes.
-    rpc RequestAvailableModes(RequestAvailableModesRequest) returns (RequestAvailableModesResponse) {}
-
+    // Set the vehicle mode.
     rpc SetMode(SetModeRequest) returns (SetModeResponse) {}
 }
 
@@ -67,15 +65,9 @@ message BatteryVoltagesResponse {
     BatteryVoltages battery_voltages = 1; // BatteryVoltages data
 }
 
-message SubscribeAvailableModesMonitorRequest {}
+message SubscribeAvailableModesRequest {}
 
-message AvailableModesMonitorResponse {
-    AvailableModesMonitor available_modes_monitor = 1;
-}
-
-message RequestAvailableModesRequest {}
-
-message RequestAvailableModesResponse {
+message AvailableModesResponse {
     repeated AvailableMode available_modes = 1;
 }
 
@@ -160,9 +152,6 @@ message AvailableMode {
     string mode_name = 6;          // Human-readable mode name
 }
 
-message AvailableModesMonitor {
-    uint32 sequence = 1; // MAVLink field: seq (uint16), converted to uint32 for proto
-}
 
 message SetModeRequest {
     uint32 mode = 1;          // Standard MAV_STANDARD_MODE enum
