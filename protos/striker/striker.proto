@@ -28,7 +28,7 @@ service StrikerService {
     // Subscribe to 'Battery voltage' updates.
     rpc SubscribeBatteryVoltages(SubscribeBatteryVoltagesRequest) returns(stream BatteryVoltagesResponse) {}
 
-    // Subscribe to 'Available Modes Monitor' updates.
+    // Subscribe to 'Available Modes' updates.
     rpc SubscribeAvailableModes(SubscribeAvailableModesRequest) returns (stream AvailableModesResponse) {}
 
     // Set the vehicle mode.
