@@ -4,6 +4,8 @@ package mavsdk.rpc.striker;
 
 import "mavsdk_options.proto";
 
+import "action/action.proto";
+
 option java_package = "io.mavsdk.striker";
 option java_outer_classname = "StrikerProto";
 
@@ -25,6 +27,14 @@ service StrikerService {
     
     // Subscribe to 'Battery voltage' updates.
     rpc SubscribeBatteryVoltages(SubscribeBatteryVoltagesRequest) returns(stream BatteryVoltagesResponse) {}
+
+    // Subscribe to 'Available Modes Monitor' updates.
+    rpc SubscribeAvailableModesMonitor(SubscribeAvailableModesMonitorRequest) returns (stream AvailableModesMonitorResponse) {}
+
+    // Request available flight modes.
+    rpc RequestAvailableModes(RequestAvailableModesRequest) returns (RequestAvailableModesResponse) {}
+
+    rpc SetMode(SetModeRequest) returns (SetModeResponse) {}
 }
 
 message SubscribeHeartbeatRequest {}
@@ -56,6 +66,23 @@ message SubscribeBatteryVoltagesRequest {}
 message BatteryVoltagesResponse {
     BatteryVoltages battery_voltages = 1; // BatteryVoltages data
 }
+
+message SubscribeAvailableModesMonitorRequest {}
+
+message AvailableModesMonitorResponse {
+    AvailableModesMonitor available_modes_monitor = 1;
+}
+
+message RequestAvailableModesRequest {}
+
+message RequestAvailableModesResponse {
+    repeated AvailableMode available_modes = 1;
+}
+
+message SetModeResponse {
+    mavsdk.rpc.action.ActionResult result = 1; // Ensure ActionResult is defined in action.proto
+}
+
 
 // Heartbeat type.
 message Heartbeat {
@@ -122,4 +149,23 @@ message Magnitometer {
 message BatteryVoltages {
     repeated uint32 voltages = 1; /*< [mV] Battery voltage of cells 1 to 10 (see voltages_ext for cells 11-14). Cells in this field above the valid cell count for this battery should have the UINT16_MAX value. If individual cell voltages are unknown or not measured for this battery, then the overall battery voltage should be filled in cell 0, with all others set to UINT16_MAX. If the voltage of the battery is greater than (UINT16_MAX - 1), then cell 0 should be set to (UINT16_MAX - 1), and cell 1 to the remaining voltage. This can be extended to multiple cells if the total voltage is greater than 2 * (UINT16_MAX - 1).*/
     repeated uint32 ext_voltages = 2; /*< [mV] Battery voltages for cells 11 to 14. Cells above the valid cell count for this battery should have a value of 0, where zero indicates not supported (note, this is different than for the voltages field and allows empty byte truncation). If the measured value is 0 then 1 should be sent instead.*/
+}
+
+message AvailableMode {
+    uint32 number_modes = 1;       // Total number of available modes
+    uint32 mode_index = 2;         // Index of this mode (1-based)
+    uint32 standard_mode = 3;      // Standard MAV_STANDARD_MODE enum
+    uint32 custom_mode = 4;        // Custom mode (autopilot-specific)
+    uint32 properties = 5;         // Bitmask of mode properties
+    string mode_name = 6;          // Human-readable mode name
+}
+
+message AvailableModesMonitor {
+    uint32 sequence = 1; // MAVLink field: seq (uint16), converted to uint32 for proto
+}
+
+message SetModeRequest {
+    uint32 mode = 1;          // Standard MAV_STANDARD_MODE enum
+    uint32 custom_mode = 2;   // Custom mode (autopilot-specific)
+    uint32 custom_sub_mode = 3; // Custom sub-mode (autopilot-specific)
 }
