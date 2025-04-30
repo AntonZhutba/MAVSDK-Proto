@@ -4,8 +4,6 @@ package mavsdk.rpc.striker;
 
 import "mavsdk_options.proto";
 
-import "action/action.proto";
-
 option java_package = "io.mavsdk.striker";
 option java_outer_classname = "StrikerProto";
 
