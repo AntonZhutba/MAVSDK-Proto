@@ -30,7 +30,7 @@ service StrikerService {
     rpc SubscribeAvailableModes(SubscribeAvailableModesRequest) returns (stream AvailableModesResponse) {}
 
     // Set the vehicle mode.
-    rpc SetManualFlightMode(SetManualFlightRequest) returns (SetManualFlightResponse) {}
+    rpc SetManualFlightMode(SetManualFlightModeRequest) returns (SetManualFlightModeResponse) {}
 }
 
 message SubscribeHeartbeatRequest {}
@@ -69,7 +69,7 @@ message AvailableModesResponse {
     repeated AvailableMode available_modes = 1;
 }
 
-message SetManualFlightResponse {
+message SetManualFlightModeResponse {
     StrikerModeResult result = 1; // Ensure ActionResult is defined in action.proto
 }
 
@@ -151,7 +151,7 @@ message AvailableMode {
 }
 
 
-message SetManualFlightRequest {
+message SetManualFlightModeRequest {
     uint32 mode = 1;          // Standard MAV_STANDARD_MODE enum
     uint32 custom_mode = 2;   // Custom mode (autopilot-specific)
     uint32 custom_sub_mode = 3; // Custom sub-mode (autopilot-specific)
