@@ -70,7 +70,7 @@ message AvailableModesResponse {
 }
 
 message SetManualFlightModeResponse {
-    StrikerModeResult result = 1; // Ensure ActionResult is defined in action.proto
+    StrikerModeResult result = 1; // Result of the action
 }
 
 
