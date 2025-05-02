@@ -31,6 +31,11 @@ service StrikerService {
 
     // Set the vehicle mode.
     rpc SetManualFlightMode(SetManualFlightModeRequest) returns (SetManualFlightModeResponse) {}
+
+    // Subscribe to 'Actuator Servos Status' updates.
+    rpc SubscribeActuatorServosStatus(SubscribeActuatorServosStatusRequest) returns (stream ActuatorServosStatusResponse) {}
+    
+
 }
 
 message SubscribeHeartbeatRequest {}
@@ -73,6 +78,17 @@ message SetManualFlightModeResponse {
     StrikerModeResult result = 1; // Result of the action
 }
 
+message SubscribeActuatorServosStatusRequest {}
+
+message ActuatorServosStatusResponse {
+    ActuatorServosStatus actuator_servos_status = 1;
+}
+
+// Actuator Servos Status type.
+message ActuatorServosStatus {
+    uint64 time_usec = 1;
+    repeated float control = 2; // Need size 8 [-1..1]
+}
 
 // Heartbeat type.
 message Heartbeat {
