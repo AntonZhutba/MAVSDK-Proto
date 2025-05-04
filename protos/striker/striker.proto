@@ -202,8 +202,8 @@ message StrikerModeResult {
         RESULT_INVALID_ARGUMENT = 14; // Invalid argument
     }
 
-    ModeResult result = 1; // Result enum value
-    string result_str = 2; // Human-readable English string describing the result
+    ModeResult mode_result = 1; // Result enum value
+    string mode_result_str = 2; // Human-readable English string describing the result
 }
 
 message StrikerRateResult {
@@ -219,6 +219,6 @@ message StrikerRateResult {
         RESULT_UNSUPPORTED = 7; // Request not supported
     }
 
-    RateResult result = 1; // Result enum value
-    string result_str = 2; // Human-readable English string describing the result
+    RateResult rate_result = 1; // Result enum value
+    string rate_result_str = 2; // Human-readable English string describing the result
 }
