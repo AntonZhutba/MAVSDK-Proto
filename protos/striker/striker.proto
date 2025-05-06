@@ -185,21 +185,21 @@ message SetManualFlightModeRequest {
 message StrikerResult {
     // Possible results returned for action requests.
     enum Result {
-        UNKNOWN = 0; // Unknown result
-        SUCCESS = 1; // Request was successful
-        NO_SYSTEM = 2; // No system is connected
-        CONNECTION_ERROR = 3; // Connection error
-        BUSY = 4; // Vehicle is busy
-        COMMAND_DENIED = 5; // Command refused by vehicle
-        COMMAND_DENIED_LANDED_STATE_UNKNOWN = 6; // Command refused because landed state is unknown
-        COMMAND_DENIED_NOT_LANDED = 7; // Command refused because vehicle not landed
-        TIMEOUT = 8; // Request timed out
-        VTOL_TRANSITION_SUPPORT_UNKNOWN = 9; // Hybrid/VTOL transition support is unknown
-        NO_VTOL_TRANSITION_SUPPORT = 10; // Vehicle does not support hybrid/VTOL transitions
-        PARAMETER_ERROR = 11; // Error getting or setting parameter
-        UNSUPPORTED = 12; // Action not supported
-        FAILED = 13; // Action failed
-        INVALID_ARGUMENT = 14; // Invalid argument
+        RESULT_UNKNOWN = 0; // Unknown result
+        RESULT_SUCCESS = 1; // Request was successful
+        RESULT_NO_SYSTEM = 2; // No system is connected
+        RESULT_CONNECTION_ERROR = 3; // Connection error
+        RESULT_BUSY = 4; // Vehicle is busy
+        RESULT_COMMAND_DENIED = 5; // Command refused by vehicle
+        RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN = 6; // Command refused because landed state is unknown
+        RESULT_COMMAND_DENIED_NOT_LANDED = 7; // Command refused because vehicle not landed
+        RESULT_TIMEOUT = 8; // Request timed out
+        RESULT_VTOL_TRANSITION_SUPPORT_UNKNOWN = 9; // Hybrid/VTOL transition support is unknown
+        RESULT_NO_VTOL_TRANSITION_SUPPORT = 10; // Vehicle does not support hybrid/VTOL transitions
+        RESULT_PARAMETER_ERROR = 11; // Error getting or setting parameter
+        RESULT_UNSUPPORTED = 12; // Action not supported
+        RESULT_FAILED = 13; // Action failed
+        RESULT_INVALID_ARGUMENT = 14; // Invalid argument
     }
 
     Result result = 1; // ModeResult enum value
