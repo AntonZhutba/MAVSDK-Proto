@@ -37,6 +37,9 @@ service StrikerService {
     
     // Set the actuator control target.
     rpc SetRateActuatorServosStatus(SetRateActuatorServosStatusRequest) returns(SetRateActuatorServosStatusResponse) {}
+
+    // Request available modes.
+    rpc RequestAvailableModes(RequestAvailableModesRequest) returns (RequestAvailableModesResponse) {}
 }
 
 message SubscribeHeartbeatRequest {}
@@ -91,6 +94,11 @@ message SetRateActuatorServosStatusRequest {
 
 message SetRateActuatorServosStatusResponse {
     StrikerResult result = 1;
+}
+
+message RequestAvailableModesRequest {}
+message RequestAvailableModesResponse {
+    StrikerResult result = 1; // Result of the action
 }
 
 // Actuator Servos Status type.
