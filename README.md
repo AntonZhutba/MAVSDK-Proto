@@ -1,4 +1,4 @@
-[![prototool](https://github.com/mavlink/MAVSDK-Proto/workflows/prototool/badge.svg)](https://github.com/mavlink/MAVSDK-Proto/actions?query=branch%3Amain)
+[![prototool](https://github.com/AntonZhutba/MAVSDK-Proto/workflows/prototool/badge.svg)](https://github.com/AntonZhutba/MAVSDK-Proto/actions?query=branch%3Amain)
 
 # MAVSDK-Proto
 
