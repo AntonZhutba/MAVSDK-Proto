@@ -79,7 +79,7 @@ message AvailableModesResponse {
 }
 
 message SetManualFlightModeResponse {
-    StrikerResult result = 1; // Result of the action
+    StrikerResult striker_result = 1; // Result of the action
 }
 
 message SubscribeActuatorServosStatusRequest {}
@@ -93,12 +93,12 @@ message SetRateActuatorServosStatusRequest {
 }
 
 message SetRateActuatorServosStatusResponse {
-    StrikerResult result = 1;
+    StrikerResult striker_result = 1;
 }
 
 message RequestAvailableModesRequest {}
 message RequestAvailableModesResponse {
-    StrikerResult result = 1; // Result of the action
+    StrikerResult striker_result = 1; // Result of the action
 }
 
 // Actuator Servos Status type.
