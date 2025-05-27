@@ -126,6 +126,8 @@ service TelemetryService {
     rpc SetRateDistanceSensor(SetRateDistanceSensorRequest) returns(SetRateDistanceSensorResponse) {}
     // Set rate to 'Altitude' updates.
     rpc SetRateAltitude(SetRateAltitudeRequest) returns(SetRateAltitudeResponse){}
+    // Set rate to 'Health' updates.
+    rpc SetRateHealth(SetRateHealthRequest) returns(SetRateHealthResponse){}
 
     // Get the GPS location of where the estimator has been initialized.
     rpc GetGpsGlobalOrigin(GetGpsGlobalOriginRequest) returns(GetGpsGlobalOriginResponse) {}
@@ -476,6 +478,13 @@ message SetRateAltitudeResponse {
     TelemetryResult telemetry_result = 1;
 }
 
+message SetRateHealthRequest {
+    double rate_hz = 1;  // The requested rate (in Hertz)
+}
+message SetRateHealthResponse {
+    TelemetryResult telemetry_result = 1;
+}
+
 // Position type in global coordinates.
 message Position {
     double latitude_deg = 1 [(mavsdk.options.default_value)="NaN"]; // Latitude in degrees (range: -90 to +90)
@@ -569,6 +578,16 @@ enum FixType {
     FIX_TYPE_RTK_FIXED = 6; // RTK Fixed, 3D position
 }
 
+// Battery function type.
+enum BatteryFunction {
+    BATTERY_FUNCTION_UNKNOWN = 0; // Battery function is unknown
+    BATTERY_FUNCTION_ALL = 1; // Battery supports all flight systems
+    BATTERY_FUNCTION_PROPULSION = 2; // Battery for the propulsion system
+    BATTERY_FUNCTION_AVIONICS = 3; // Avionics battery
+    BATTERY_FUNCTION_PAYLOAD = 4; // Payload battery
+
+}
+
 // Battery type.
 message Battery {
     uint32 id = 1 [(mavsdk.options.default_value)="0"]; // Battery ID, for systems with multiple batteries
@@ -577,6 +596,8 @@ message Battery {
     float current_battery_a = 4 [(mavsdk.options.default_value)="NaN"]; // Battery current in Amps, NAN if autopilot does not measure the current
     float capacity_consumed_ah = 5 [(mavsdk.options.default_value)="NaN"]; // Consumed charge in Amp hours, NAN if autopilot does not provide consumption estimate
     float remaining_percent = 6 [(mavsdk.options.default_value)="NaN"]; // Estimated battery remaining (range: 0 to 100)
+    float time_remaining_s = 7 [(mavsdk.options.default_value)="NaN"]; // Estimated battery usage time remaining 
+    BatteryFunction battery_function = 8; // Function of the battery
 }
 
 /*
