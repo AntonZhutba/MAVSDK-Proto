@@ -28,9 +28,9 @@ setup(
     name="protoc-gen-mavsdk",
     version="1.2.2",
     description="Protoc plugin used to generate MAVSDK bindings",
-    url="",
-    maintainer="",
-    maintainer_email="",
+    url="https://github.com/mavlink/MAVSDK-Proto",
+    maintainer="Jonas Vautherin, Julian Oes",
+    maintainer_email="jonas.vautherin@gmail.com, julian@oes.ch",
 
     classifiers=[
         "Development Status :: 5 - Production/Stable",
