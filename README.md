@@ -12,6 +12,8 @@ The proto files defining the components are located into [protos](protos), and t
 
 ## Usage
 
+Please read: [Additional information](https://mavsdk.mavlink.io/main/en/cpp/contributing/plugins.html#create-a-plugin)
+ 
 Edit or add .proto
 
 In the protos/ directory:
