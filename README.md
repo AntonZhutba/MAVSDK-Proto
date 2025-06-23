@@ -24,7 +24,7 @@ or
 Update submodule in [MAVSDK]((https://dev.dedrone.com/dt/striker/mavsdk/)) project
 
 ```sh
-git submodule update --init
+git submodule update --init --recursive
 ```
 Install protoc_gen_mavsdk
 
