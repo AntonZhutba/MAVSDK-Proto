@@ -41,10 +41,10 @@ service StrikerService {
     // Request available modes.
     rpc RequestAvailableModes(RequestAvailableModesRequest) returns (RequestAvailableModesResponse) {}
 
-    // Subscribe to 'CAA Confidence level' updates.
+    // Subscribe to 'CAA confidence level' updates.
     rpc SubscribeCaaConfidenceLevel(SubscribeCaaConfidenceLevelRequest) returns (stream CaaConfidenceLevelResponse) {}
     
-    // Set the actuator control target.
+    // Set the caa confidence level target. 
     rpc SetRateCaaConfidenceLevel(SetRateCaaConfidenceLevelRequest) returns(SetRateCaaConfidenceLevelResponse) {}
 }
 
@@ -108,9 +108,9 @@ message RequestAvailableModesResponse {
 }
 
 message SubscribeCaaConfidenceLevelRequest {}
+
 message CaaConfidenceLevelResponse {
-    uint64 time_usec = 1; // Time since system start [in microseconds].
-    float confidence_level = 2;  // Single float confidence level value, between 0.0 (no confidence) and 1.0 (max confidence), (NaN if unavailable).
+    CaaConfidenceLevel caa_confidence_level = 1; // CAA confidence level data
 }
 
 message SetRateCaaConfidenceLevelRequest {
@@ -126,6 +126,13 @@ message ActuatorServosStatus {
     uint64 time_usec = 1;
     repeated float control = 2; // Need size 8 [-1..1]
 }
+
+// CAA confidence level.
+message CaaConfidenceLevel {
+    uint64 time_usec = 1; // Time since system start [in microseconds].
+    float confidence_level = 2;  // Single float confidence level value, between 0.0 (no confidence) and 1.0 (max confidence), (NaN if unavailable).
+}
+
 
 // Heartbeat type.
 message Heartbeat {
