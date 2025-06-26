@@ -40,6 +40,12 @@ service StrikerService {
 
     // Request available modes.
     rpc RequestAvailableModes(RequestAvailableModesRequest) returns (RequestAvailableModesResponse) {}
+
+    // Subscribe to 'CAA Confidence level' updates.
+    rpc SubscribeCaaConfidenceLevel(SubscribeCaaConfidenceLevelRequest) returns (stream CaaConfidenceLevelResponse) {}
+    
+    // Set the actuator control target.
+    rpc SetRateCaaConfidenceLevel(SetRateCaaConfidenceLevelRequest) returns(SetRateCaaConfidenceLevelResponse) {}
 }
 
 message SubscribeHeartbeatRequest {}
@@ -98,6 +104,20 @@ message SetRateActuatorServosStatusResponse {
 
 message RequestAvailableModesRequest {}
 message RequestAvailableModesResponse {
+    StrikerResult striker_result = 1; // Result of the action
+}
+
+message SubscribeCaaConfidenceLevelRequest {}
+message CaaConfidenceLevelResponse {
+    uint64 time_usec = 1; // Time since system start [in microseconds].
+    float confidence_level = 2;  // Single float confidence level value, between 0.0 (no confidence) and 1.0 (max confidence), (NaN if unavailable).
+}
+
+message SetRateCaaConfidenceLevelRequest {
+    double rate_hz = 1; // The requested rate (in Hertz)
+}
+
+message SetRateCaaConfidenceLevelResponse {
     StrikerResult striker_result = 1; // Result of the action
 }
 
